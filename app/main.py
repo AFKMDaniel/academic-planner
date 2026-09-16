@@ -11,7 +11,14 @@ from app.services.demo_data import seed_demo_data
 from app.ui.error_handling import install_exception_hook
 from app.ui.main_window import MainWindow
 
-STYLE_PATH = Path(__file__).resolve().parents[1] / "resources" / "style.qss"
+
+def _resources_dir() -> Path:
+    if getattr(sys, "frozen", False):
+        return Path(sys._MEIPASS) / "resources"
+    return Path(__file__).resolve().parents[1] / "resources"
+
+
+STYLE_PATH = _resources_dir() / "style.qss"
 
 
 def load_stylesheet() -> str:
